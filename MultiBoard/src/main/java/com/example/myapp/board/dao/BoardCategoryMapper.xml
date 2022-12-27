@@ -21,7 +21,7 @@
 			NVL(MAX(category_id),0) AS "categoryId"
 		FROM board_category
 	]]>
-	</select>
+	</select> 
 
 	<insert id="insertNewCategory" parameterType="com.example.myapp.board.model.BoardCategory">
 	<![CDATA[
