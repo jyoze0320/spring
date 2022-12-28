@@ -92,6 +92,7 @@ public class BoardService implements IBoardService {
         	if(file.getFileId()>0) {
         		boardRepository.updateFileData(file);
         	}else {
+        		file.setFileId(boardRepository.selectMaxFileId()+1);
         		boardRepository.insertFileData(file);
         	}
         }
