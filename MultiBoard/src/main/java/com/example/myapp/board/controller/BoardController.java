@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -88,7 +87,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
-	public String writeArticle(Board board, BindingResult result, RedirectAttributes redirectAttrs) {
+	public String writeArticle(Board board, RedirectAttributes redirectAttrs) {
 		logger.info("/board/write : " + board.toString());
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
@@ -139,7 +138,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/reply", method=RequestMethod.POST)
-	public String replyArticle(Board board, BindingResult result, RedirectAttributes redirectAttrs, HttpSession session) {
+	public String replyArticle(Board board, RedirectAttributes redirectAttrs, HttpSession session) {
 		logger.info("/board/reply : " + board.toString());
 
 		try{
@@ -182,7 +181,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value="/board/update", method=RequestMethod.POST)
-	public String updateArticle(Board board, BindingResult result, RedirectAttributes redirectAttrs) {
+	public String updateArticle(Board board, RedirectAttributes redirectAttrs) {
 		logger.info("/board/update " + board.toString());
 		String dbPassword = boardService.getPassword(board.getBoardId());
 		if(!board.getPassword().equals(dbPassword)) {
@@ -224,7 +223,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/delete", method=RequestMethod.POST)
-	public String deleteArticle(Board board, BindingResult result, HttpSession session, Model model) {
+	public String deleteArticle(Board board, HttpSession session, Model model) {
 		try {
 			String dbpw = boardService.getPassword(board.getBoardId());
 
