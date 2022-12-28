@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +92,8 @@ public class BoardController {
 		logger.info("/board/write : " + board.toString());
 		try{
 			board.setContent(board.getContent().replace("\r\n", "<br>"));
-			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
-			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
+			board.setTitle(Jsoup.clean(board.getTitle(), Safelist.basic()));
+			board.setContent(Jsoup.clean(board.getContent(), Safelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
 				logger.info("/board/write : " + mfile.getOriginalFilename());
@@ -143,8 +143,8 @@ public class BoardController {
 		logger.info("/board/reply : " + board.toString());
 
 		try{
-			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
-			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
+			board.setTitle(Jsoup.clean(board.getTitle(), Safelist.basic()));
+			board.setContent(Jsoup.clean(board.getContent(), Safelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
 				logger.info("/board/reply : " + mfile.getOriginalFilename());
@@ -191,8 +191,8 @@ public class BoardController {
 			return "redirect:/board/update/" + board.getBoardId();
 		}
 		try{
-			board.setTitle(Jsoup.clean(board.getTitle(), Whitelist.basic()));
-			board.setContent(Jsoup.clean(board.getContent(), Whitelist.basic()));
+			board.setTitle(Jsoup.clean(board.getTitle(), Safelist.basic()));
+			board.setContent(Jsoup.clean(board.getContent(), Safelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
 				logger.info("/board/update : " + mfile.getOriginalFilename());

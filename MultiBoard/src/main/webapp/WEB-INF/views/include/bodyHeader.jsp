@@ -42,9 +42,9 @@
 				<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><fmt:message key="BOARD"/></strong></a>
                     <ul class="dropdown-menu">
-                    	<li><a href="/board/cat/1">게시판</a>
-			        	<li><a href="/board/cat/2">자료실</a>
-			        	<li><a href="/board/cat/3">겔러리</a>
+                    	<li><a href="<c:url value='/board/cat/1'/>">게시판</a>
+			        	<li><a href="<c:url value='/board/cat/2'/>">자료실</a>
+			        	<li><a href="<c:url value='/board/cat/3'/>">겔러리</a>
 					</ul>
 				</li>
                 <li class="dropdown">
