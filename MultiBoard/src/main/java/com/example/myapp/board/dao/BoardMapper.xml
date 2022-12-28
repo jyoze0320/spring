@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.myapp.board.dao.IBoardRepository">
 
-	<select id="selectArticleListByCategory" parameterType="map" resultType="com.example.myapp.board.model.Board">
+	<select id="selectArticleListByCategory" parameterType="hashmap" resultType="com.example.myapp.board.model.Board">
 	<![CDATA[
 	SELECT 
 	    board_id 				AS "boardId", 
@@ -107,7 +107,7 @@
 	]]>
 	</select>
 
-	<insert id="updateReplyNumber" parameterType="map">
+	<insert id="updateReplyNumber" parameterType="hashmap">
 	<![CDATA[
 		UPDATE 
 			board 

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" trimDirectiveWhitespaces="true" isErrorPage="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 response.setStatus(200);
 %>
@@ -21,7 +20,7 @@ response.setStatus(200);
 			</c:forEach>
 		-->
 		</p>
-		<p><a class="btn btn-primary btn-lg" href='<c:url value="/"/>' role="button"><fmt:message key="HOME"/></a></p>
+		<p><a class="btn btn-primary" href="<c:url value='/'/>">Home</a></p>
 	</div>
 </div>
 </div>
