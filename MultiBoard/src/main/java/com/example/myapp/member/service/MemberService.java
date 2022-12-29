@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.myapp.member.dao.IMemberRepository;
 import com.example.myapp.member.model.Member;
-import com.example.myapp.member.service.IMemberService;
 
 @Service
 public class MemberService implements IMemberService {
