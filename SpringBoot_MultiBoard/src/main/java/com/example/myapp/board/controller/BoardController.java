@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ import com.example.myapp.board.model.BoardUploadFile;
 import com.example.myapp.board.service.IBoardCategoryService;
 import com.example.myapp.board.service.IBoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -72,7 +74,7 @@ public class BoardController {
 		model.addAttribute("nowPageBlock", nowPageBlock);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		
+
 		return "board/list";
 	}
 
@@ -314,4 +316,11 @@ public class BoardController {
 		return "board/search";
 	}
 
+	@ExceptionHandler({RuntimeException.class})
+	public String error(HttpServletRequest request, Exception ex, Model model) {
+		model.addAttribute("exception", ex);
+		model.addAttribute("stackTrace", ex.getStackTrace());
+		model.addAttribute("url", request.getRequestURI());
+		return "error/runtime";
+	}
 }
