@@ -2,6 +2,7 @@ package com.example.myapp.config;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +13,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import com.example.myapp.common.filter.LoginInterceptor;
+
 @Configuration
-public class LocaleConfiguration implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
+	
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -36,8 +40,19 @@ public class LocaleConfiguration implements WebMvcConfigurer {
 		return messageSource;
 	}
 	
+	@Bean
+	public LoginInterceptor loginInterceptor() {
+		return new LoginInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
+		registry.addInterceptor(loginInterceptor())
+				.addPathPatterns("/file/**")
+				.addPathPatterns("/board/write/**")
+				.addPathPatterns("/board/update/**")
+				.addPathPatterns("/board/reply/**")
+				.addPathPatterns("/board/delete/**");
 	}
 }

@@ -3,6 +3,7 @@ package com.example.myapp.member.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +29,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(Member member, HttpSession session) {
-		memberService.insertMember(member);
+	public String memberInsert(Member member, HttpSession session, Model model) {
+		try {
+			memberService.insertMember(member);
+		}catch(DuplicateKeyException e) {
+			member.setUserid(null);
+			model.addAttribute("member", member);
+			model.addAttribute("message", "ID_ALREADY_EXIST");
+			return "member/form";
+		}
 		session.invalidate();
 		return "home";
 	}
