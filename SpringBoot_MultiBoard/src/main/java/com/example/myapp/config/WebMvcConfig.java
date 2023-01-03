@@ -25,18 +25,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-		lci.setParamName("lang");
-		return lci;
-	}
-	
-	@Bean("messageSource")
-	public MessageSource getMessageSource() {
+	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasenames("i18n/message");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
+	}
+	
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+		lci.setParamName("lang");
+		return lci;
 	}
 	
 	@Bean
@@ -47,12 +47,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
-		registry.addInterceptor(loginInterceptor())
-				.addPathPatterns("/file/**")
-				.addPathPatterns("/board/write/**")
-				.addPathPatterns("/board/update/**")
-				.addPathPatterns("/board/reply/**")
-				.addPathPatterns("/board/delete/**");
+//		registry.addInterceptor(loginInterceptor())
+//				.addPathPatterns("/file/**")
+//				.addPathPatterns("/board/write/**")
+//				.addPathPatterns("/board/update/**")
+//				.addPathPatterns("/board/reply/**")
+//				.addPathPatterns("/board/delete/**");
 	}
 
 }
