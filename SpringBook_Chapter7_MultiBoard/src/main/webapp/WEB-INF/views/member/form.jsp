@@ -36,9 +36,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="password_re"><fmt:message key="MEMBER_PW_RE"/></label>
+      <label class="control-label col-sm-2" for="password2"><fmt:message key="MEMBER_PW_RE"/></label>
       <div class="col-sm-4">
-        <input type="password" name="password_re" id="password_re" class="form-control" required>
+        <input type="password" name="password2" id="password2" class="form-control" required>
         <span id="passwordConfirm"></span>
       </div>
     </div>
@@ -74,7 +74,7 @@
 </html>
 <script type="text/javascript">
 var pw1 = document.querySelector("#password");
-var pw2 = document.querySelector("#password_re");
+var pw2 = document.querySelector("#password2");
 var pwConfirm = document.querySelector("#passwordConfirm");
 pw2.onkeyup = function(event) {
 	if(pw1.value !== pw2.value) {
