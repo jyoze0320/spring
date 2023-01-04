@@ -8,9 +8,7 @@
 	    <div class="row">
 	        <div class="col-md-6 pc">
 	            <h2>[[#{SEARCH_RESULT}]]
-	            <c:if test="${empty name}">
-	            <small style="color:red;">[[#{LOGIN}]]</small>
-	            </c:if>
+	            <small style="color:red;" th:if="${name==null}">[[#{LOGIN}]]</small>
 	            </h2>
 	        </div>
 	        <div class="col-md-6">
@@ -52,7 +50,6 @@
 			<td class="pc" th:text="${#dates.format(board.writeDate, 'YYYY-MM-dd')}"></td>
 			<td class="pc">[[${board.readCount}]]</td>
 		</tr>
-		</c:forEach>
 		</table>
 		<table class="table">
 		<tr>

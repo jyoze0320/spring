@@ -1,94 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/include/header :: header}"></head> 
-<script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function() {
-    // JavaScript form validation
-    var checkPassword = function(str) {
-      var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-      return re.test(str);
-    };
-
-    var checkForm = function(e) {
-      if(this.username.value == "") {
-        alert("Error: Username cannot be blank!");
-        this.username.focus();
-        e.preventDefault(); // equivalent to return false
-        return;
-      }
-      re = /^\w+$/;
-      if(!re.test(this.username.value)) {
-        alert("Error: Username must contain only letters, numbers and underscores!");
-        this.username.focus();
-        e.preventDefault();
-        return;
-      }
-      if(this.pwd1.value != "" && this.pwd1.value == this.pwd2.value) {
-        if(!checkPassword(this.pwd1.value)) {
-          alert("The password you have entered is not valid!");
-          this.pwd1.focus();
-          e.preventDefault();
-          return;
-        }
-      } else {
-        alert("Error: Please check that you've entered and confirmed your password!");
-        this.pwd1.focus();
-        e.preventDefault();
-        return;
-      }
-      alert("Both username and password are VALID!");
-    };
-
-    var myForm = document.getElementById("joinForm");
-    myForm.addEventListener("submit", checkForm, true);
-
-    // HTML5 form validation
-    var supports_input_validity = function() {
-      var i = document.createElement("input");
-      return "setCustomValidity" in i;
-    }
-
-    if(supports_input_validity()) {
-      var usernameInput = document.getElementById("userid");
-      usernameInput.setCustomValidity(usernameInput.title);
-
-      var pwd1Input = document.getElementById("password");
-      pwd1Input.setCustomValidity(pwd1Input.title);
-
-      var pwd2Input = document.getElementById("password_re");
-
-      // input key handlers
-
-      usernameInput.addEventListener("keyup", function() {
-        usernameInput.setCustomValidity(this.validity.patternMismatch ? usernameInput.title : "");
-      }, false);
-
-      pwd1Input.addEventListener("keyup", function() {
-        this.setCustomValidity(this.validity.patternMismatch ? pwd1Input.title : "");
-        if(this.checkValidity()) {
-          pwd2Input.pattern = this.value;
-          pwd2Input.setCustomValidity(pwd2Input.title);
-        } else {
-          pwd2Input.pattern = this.pattern;
-          pwd2Input.setCustomValidity("");
-        }
-      }, false);
-
-      pwd2Input.addEventListener("keyup", function() {
-        this.setCustomValidity(this.validity.patternMismatch ? pwd2Input.title : "");
-      }, false);
-
-    }
-
-  }, false);
-</script>
 <body>
 <div th:replace="~{/include/body-header :: bodyHeader}"></div>
 <div class="container">
 	<div class="pg-opt">
         <div class="row">
             <div class="col-md-6 pc">
-                <h2>[[#{INSERT_USER_INFO}]]</h2>[[#{${message}}]]
+                <h2>[[#{INSERT_USER_INFO}]]</h2><span th:if="${message != null}">[[#{${message}}]]</span>
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb">
@@ -115,7 +34,8 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="password_re">[[#{MEMBER_PW_RE}]]</label>
       <div class="col-sm-4">
-        <input type="password" name="password_re" id="password_re" class="form-control" th:title="#{PASSWORD_RE_TITLE}" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" required>
+        <input type="password" name="password_re" id="password_re" class="form-control" required>
+        <span id="passwordConfirm"></span>
       </div>
     </div>
 	<div class="form-group">
@@ -148,3 +68,15 @@
 <footer th:replace="~{/include/footer :: footer}"></footer> 
 </body>
 </html>
+<script type="text/javascript">
+var pw1 = document.querySelector("#password");
+var pw2 = document.querySelector("#password_re");
+var pwConfirm = document.querySelector("#passwordConfirm");
+pw2.onkeyup = function(event) {
+	if(pw1.value !== pw2.value) {
+		pwConfirm.innerText = "비밀번호가 일치하지 않습니다.";
+	}else {
+		pwConfirm.innerText = "";
+	}
+}
+</script>
