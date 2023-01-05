@@ -121,13 +121,11 @@ public class BoardController {
 			board.setContent(Jsoup.clean(board.getContent(), Safelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
-				logger.info("/board/write : " + mfile.getOriginalFilename());
 				BoardUploadFile file = new BoardUploadFile();
 				file.setFileName(mfile.getOriginalFilename());
 				file.setFileSize(mfile.getSize());
 				file.setFileContentType(mfile.getContentType());
 				file.setFileData(mfile.getBytes());
-				logger.info("/board/write : " + file.toString());
 				boardService.insertArticle(board, file);
 			}else {
 				boardService.insertArticle(board);
@@ -177,20 +175,16 @@ public class BoardController {
 	@RequestMapping(value="/board/reply", method=RequestMethod.POST)
 	public String replyArticle(Board board, RedirectAttributes redirectAttrs, HttpSession session) {
 		logger.info("/board/reply : " + board.toString());
-
 		try{
 			board.setTitle(Jsoup.clean(board.getTitle(), Safelist.basic()));
 			board.setContent(Jsoup.clean(board.getContent(), Safelist.basic()));
 			MultipartFile mfile = board.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
-				logger.info("/board/reply : " + mfile.getOriginalFilename());
 				BoardUploadFile file = new BoardUploadFile();
 				file.setFileName(mfile.getOriginalFilename());
 				file.setFileSize(mfile.getSize());
 				file.setFileContentType(mfile.getContentType());
 				file.setFileData(mfile.getBytes());
-				logger.info("/board/reply : " + file.toString());
-
 				boardService.replyArticle(board, file);
 			}else {
 				boardService.replyArticle(board);
@@ -222,7 +216,6 @@ public class BoardController {
 		logger.info("/board/update " + board.toString());
 		String dbPassword = boardService.getPassword(board.getBoardId());
 		if(!board.getPassword().equals(dbPassword)) {
-//			throw new RuntimeException("게시글 비밀번호가 다릅니다.");
 			redirectAttrs.addFlashAttribute("passwordError", "게시글 비밀번호가 다릅니다");
 			return "redirect:/board/update/" + board.getBoardId();
 		}
@@ -284,7 +277,6 @@ public class BoardController {
 			List<Board> boardList = boardService.searchListByContentKeyword(keyword, page);
 			model.addAttribute("boardList", boardList);
 	
-			// 검색 결과 페이징 처리
 			int bbsCount = boardService.selectTotalArticleCountByKeyword(keyword);
 			int totalPage = 0;
 

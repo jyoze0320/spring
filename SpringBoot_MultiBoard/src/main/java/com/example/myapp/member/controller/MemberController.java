@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.myapp.member.MemberValidator;
 import com.example.myapp.member.model.Member;
 import com.example.myapp.member.service.IMemberService;
 
@@ -22,6 +27,14 @@ public class MemberController {
 	@Autowired
 	IMemberService memberService;
 
+	@Autowired
+	MemberValidator memberValidator;
+	
+	@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(memberValidator);
+	}
+	
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String joinForm(Model model) {
 		model.addAttribute("member", new Member());
@@ -29,7 +42,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(Member member, HttpSession session, Model model) {
+	public String memberInsert(@Validated Member member, BindingResult result, HttpSession session, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("member", member);
+			return "member/form";
+		}
+		
 		try {
 			memberService.insertMember(member);
 		}catch(DuplicateKeyException e) {
@@ -97,7 +115,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
-	public String updateMember(Member member, HttpSession session, Model model) {
+	public String updateMember(@Validated Member member, BindingResult result,HttpSession session, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("member", member);
+			return "member/update";
+		}
+		
 		try{
 			memberService.updateMember(member);
 			model.addAttribute("message", "UPDATED_MEMBER_INFO");

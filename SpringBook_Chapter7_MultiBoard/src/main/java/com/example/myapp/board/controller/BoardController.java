@@ -1,6 +1,7 @@
 package com.example.myapp.board.controller;
 
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -122,7 +123,12 @@ public class BoardController {
 		String[] mtypes = file.getFileContentType().split("/");
 		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 		headers.setContentLength(file.getFileSize());
-		headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
+		try {
+			String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8");
+			headers.setContentDispositionFormData("attachment", encodedFileName);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 		return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
 	}
 	
