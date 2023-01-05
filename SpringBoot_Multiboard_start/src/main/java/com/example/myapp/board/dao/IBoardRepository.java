@@ -2,11 +2,15 @@ package com.example.myapp.board.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import com.example.myapp.board.model.Board;
 import com.example.myapp.board.model.BoardUploadFile;
 
+@Repository
+@Mapper
 public interface IBoardRepository {
 	int selectMaxArticleNo();
 	int selectMaxFileId();
