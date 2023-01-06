@@ -51,13 +51,11 @@ public class BoardController {
 		List<Board> boardList = boardService.selectArticleListByCategory(categoryId, page);
 		model.addAttribute("boardList", boardList);
 
-		// paging start
 		int bbsCount = boardService.selectTotalArticleCountByCategoryId(categoryId);
 		int totalPage = 0;
 		if(bbsCount > 0) {
 			totalPage= (int)Math.ceil(bbsCount/10.0);
 		}
-		
 		int totalPageBlock = (int)(Math.ceil(totalPage/10.0));
 		int nowPageBlock = (int) Math.ceil(page/10.0);
 		int startPage = (nowPageBlock-1)*10 + 1;
@@ -67,14 +65,12 @@ public class BoardController {
 		}else {
 			endPage = totalPage;
 		}
-
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("nowPage", page);
 		model.addAttribute("totalPageBlock", totalPageBlock);
 		model.addAttribute("nowPageBlock", nowPageBlock);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-
 		return "board/list";
 	}
 
@@ -151,12 +147,6 @@ public class BoardController {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
-//		try {
-//			System.out.println(URLEncoder.encode(file.getFileName(), StandardCharsets.UTF_8.toString()));
-//			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(file.getFileName(), StandardCharsets.UTF_8.toString()));
-//		} catch (UnsupportedEncodingException e) {
-//			throw new RuntimeException(e);
-//		}
 		return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
 	}
 	
@@ -293,7 +283,6 @@ public class BoardController {
 			}else {
 				endPage = totalPage;
 			}
-			
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalPageCount", totalPage);
 			model.addAttribute("nowPage", page);
@@ -301,7 +290,6 @@ public class BoardController {
 			model.addAttribute("nowPageBlock", nowPageBlock);
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("endPage", endPage);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

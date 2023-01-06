@@ -36,13 +36,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
-	public String joinForm(Model model) {
+	public String insertMember(Model model) {
 		model.addAttribute("member", new Member());
 		return "member/form";
 	}
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(@Validated Member member, BindingResult result, HttpSession session, Model model) {
+	public String insertMember(@Validated Member member, BindingResult result, HttpSession session, Model model) {
 		if(result.hasErrors()) {
 			model.addAttribute("member", member);
 			return "member/form";

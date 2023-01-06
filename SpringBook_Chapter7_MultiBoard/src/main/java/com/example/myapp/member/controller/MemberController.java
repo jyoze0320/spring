@@ -23,12 +23,12 @@ public class MemberController {
 	IMemberService memberService;
 
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
-	public String joinForm() {
+	public String insertMember() {
 		return "member/form";
 	}
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(Member member, HttpSession session, Model model) {
+	public String insertMember(Member member, HttpSession session, Model model) {
 		try {
 			memberService.insertMember(member);
 		}catch(DuplicateKeyException e) {
